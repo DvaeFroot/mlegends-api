@@ -1,0 +1,27 @@
+meta {
+  name: Get Scrape Run by ID
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/history/{{scrape_run_id}}
+  body: none
+  auth: apikey
+}
+
+auth:apikey {
+  key: x-api
+  value: {{x-api-key}}
+  placement: header
+}
+
+tests {
+  test("returns 200", function () {
+    expect(res.status).to.equal(200);
+  });
+
+  test("has status", function () {
+    expect(res.body).to.have.property("status");
+  });
+}

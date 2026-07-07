@@ -1,0 +1,27 @@
+meta {
+  name: Trigger Item Scrape
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/items/scrape
+  body: none
+  auth: apikey
+}
+
+auth:apikey {
+  key: x-api
+  value: {{x-api-key}}
+  placement: header
+}
+
+tests {
+  test("returns 202", function () {
+    expect(res.status).to.equal(202);
+  });
+
+  test("returns started message", function () {
+    expect(res.body).to.have.property("message");
+  });
+}

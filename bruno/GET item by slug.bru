@@ -1,0 +1,37 @@
+meta {
+  name: Get Item by Slug
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/items/{{item_slug}}
+  body: none
+  auth: apikey
+}
+
+auth:apikey {
+  key: x-api
+  value: {{x-api-key}}
+  placement: header
+}
+
+tests {
+  test("returns 200", function () {
+    expect(res.status).to.equal(200);
+  });
+
+  test("has slug and name", function () {
+    expect(res.body).to.have.property("slug");
+    expect(res.body).to.have.property("name");
+  });
+
+  test("has stats", function () {
+    expect(res.body).to.have.property("stats");
+  });
+
+  test("has components array", function () {
+    expect(res.body).to.have.property("components");
+    expect(res.body.components).to.be.an("array");
+  });
+}

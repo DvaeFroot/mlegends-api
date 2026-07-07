@@ -1,0 +1,40 @@
+meta {
+  name: Get Scrape History
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/history
+  body: none
+  auth: apikey
+}
+
+auth:apikey {
+  key: x-api
+  value: {{x-api-key}}
+  placement: header
+}
+
+params:query {
+  ~resource_type: champions
+  ~status: success
+  ~page: 1
+  ~limit: 20
+}
+
+tests {
+  test("returns 200", function () {
+    expect(res.status).to.equal(200);
+  });
+
+  test("returns array", function () {
+    expect(res.body).to.be.an("array");
+  });
+
+  test("stores first run id", function () {
+    if (res.body.length > 0) {
+      bru.setVar("scrape_run_id", res.body[0].id);
+    }
+  });
+}

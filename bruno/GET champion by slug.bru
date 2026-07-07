@@ -1,0 +1,37 @@
+meta {
+  name: Get Champion by Slug
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/champions/{{champion_slug}}
+  body: none
+  auth: apikey
+}
+
+auth:apikey {
+  key: x-api
+  value: {{x-api-key}}
+  placement: header
+}
+
+tests {
+  test("returns 200", function () {
+    expect(res.status).to.equal(200);
+  });
+
+  test("has slug and name", function () {
+    expect(res.body).to.have.property("slug");
+    expect(res.body).to.have.property("name");
+  });
+
+  test("has base stats", function () {
+    expect(res.body).to.have.property("base_stats");
+  });
+
+  test("has abilities array", function () {
+    expect(res.body).to.have.property("abilities");
+    expect(res.body.abilities).to.be.an("array");
+  });
+}

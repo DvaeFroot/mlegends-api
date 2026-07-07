@@ -1,0 +1,27 @@
+meta {
+  name: Get Scrape Run Changes
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{baseUrl}}/history/{{scrape_run_id}}/changes
+  body: none
+  auth: apikey
+}
+
+auth:apikey {
+  key: x-api
+  value: {{x-api-key}}
+  placement: header
+}
+
+tests {
+  test("returns 200", function () {
+    expect(res.status).to.equal(200);
+  });
+
+  test("returns array", function () {
+    expect(res.body).to.be.an("array");
+  });
+}

@@ -1,0 +1,732 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "AppController_health",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "status": "ok"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Health check",
+        "tags": [
+          "Health"
+        ]
+      }
+    },
+    "/champions": {
+      "get": {
+        "operationId": "ChampionsController_findAll",
+        "parameters": [
+          {
+            "name": "role",
+            "required": false,
+            "in": "query",
+            "description": "Filter by role (e.g. Tank, Fighter, Mage)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "specialty",
+            "required": false,
+            "in": "query",
+            "description": "Filter by specialty (e.g. Crowd Control, Burst)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 300,
+              "default": 20,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChampionResponseDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "x-rapidapi-proxy-secret": []
+          }
+        ],
+        "summary": "List all champions",
+        "tags": [
+          "Champions"
+        ]
+      }
+    },
+    "/champions/{slug}": {
+      "get": {
+        "operationId": "ChampionsController_findOne",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": "Layla",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChampionResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Champion not found"
+          }
+        },
+        "security": [
+          {
+            "x-rapidapi-proxy-secret": []
+          }
+        ],
+        "summary": "Get champion by slug",
+        "tags": [
+          "Champions"
+        ]
+      }
+    },
+    "/champions/scrape": {
+      "post": {
+        "operationId": "ChampionsController_triggerScrape",
+        "parameters": [],
+        "responses": {
+          "202": {
+            "description": "Scrape started"
+          }
+        },
+        "security": [
+          {
+            "x-rapidapi-proxy-secret": []
+          },
+          {
+            "x-api": []
+          }
+        ],
+        "summary": "Trigger champion scrape (admin)",
+        "tags": [
+          "Champions"
+        ]
+      }
+    },
+    "/items": {
+      "get": {
+        "operationId": "ItemsController_findAll",
+        "parameters": [
+          {
+            "name": "type",
+            "required": false,
+            "in": "query",
+            "description": "Filter by type (e.g. Attack, Defense, Magic)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tier",
+            "required": false,
+            "in": "query",
+            "description": "Filter by tier (1, 2, or 3)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 300,
+              "default": 20,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ItemResponseDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "x-rapidapi-proxy-secret": []
+          }
+        ],
+        "summary": "List all items",
+        "tags": [
+          "Items"
+        ]
+      }
+    },
+    "/items/{slug}": {
+      "get": {
+        "operationId": "ItemsController_findOne",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": "Blade_of_Despair",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found"
+          }
+        },
+        "security": [
+          {
+            "x-rapidapi-proxy-secret": []
+          }
+        ],
+        "summary": "Get item by slug",
+        "tags": [
+          "Items"
+        ]
+      }
+    },
+    "/items/scrape": {
+      "post": {
+        "operationId": "ItemsController_triggerScrape",
+        "parameters": [],
+        "responses": {
+          "202": {
+            "description": "Scrape started"
+          }
+        },
+        "security": [
+          {
+            "x-rapidapi-proxy-secret": []
+          },
+          {
+            "x-api": []
+          }
+        ],
+        "summary": "Trigger item scrape (admin)",
+        "tags": [
+          "Items"
+        ]
+      }
+    },
+    "/history": {
+      "get": {
+        "operationId": "HistoryController_findAllRuns",
+        "parameters": [
+          {
+            "name": "resource_type",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "champions",
+                "items"
+              ]
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "success",
+                "partial",
+                "failed",
+                "running"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ScrapeRunResponseDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "x-rapidapi-proxy-secret": []
+          }
+        ],
+        "summary": "List scrape runs",
+        "tags": [
+          "History"
+        ]
+      }
+    },
+    "/history/{id}": {
+      "get": {
+        "operationId": "HistoryController_findOneRun",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Scrape run UUID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScrapeRunResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Scrape run not found"
+          }
+        },
+        "security": [
+          {
+            "x-rapidapi-proxy-secret": []
+          }
+        ],
+        "summary": "Get scrape run by ID",
+        "tags": [
+          "History"
+        ]
+      }
+    },
+    "/history/{id}/changes": {
+      "get": {
+        "operationId": "HistoryController_findRunChanges",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Scrape run UUID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChangeHistoryResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Scrape run not found"
+          }
+        },
+        "security": [
+          {
+            "x-rapidapi-proxy-secret": []
+          }
+        ],
+        "summary": "Get all changes recorded in a scrape run",
+        "tags": [
+          "History"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Mobile Legends API",
+    "description": "Champion, item, and scrape history data for Mobile Legends Bang Bang",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "x-rapidapi-proxy-secret": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-rapidapi-proxy-secret"
+      },
+      "x-api": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api"
+      }
+    },
+    "schemas": {
+      "AbilityDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "cooldown": {
+            "type": "object"
+          },
+          "type": {
+            "type": "object"
+          },
+          "iconUrl": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "name",
+          "description"
+        ]
+      },
+      "ChampionResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "specialty": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "lore": {
+            "type": "object"
+          },
+          "releaseDate": {
+            "type": "object"
+          },
+          "portraitUrl": {
+            "type": "object"
+          },
+          "baseStats": {
+            "type": "object"
+          },
+          "abilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AbilityDto"
+            }
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "role",
+          "specialty",
+          "baseStats",
+          "abilities",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "ItemComponentDto": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug",
+          "name"
+        ]
+      },
+      "ItemResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "object"
+          },
+          "tier": {
+            "type": "object"
+          },
+          "cost": {
+            "type": "object"
+          },
+          "description": {
+            "type": "object"
+          },
+          "passiveName": {
+            "type": "object"
+          },
+          "passiveDescription": {
+            "type": "object"
+          },
+          "stats": {
+            "type": "object"
+          },
+          "components": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemComponentDto"
+            }
+          },
+          "imageUrl": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "stats",
+          "components",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "ScrapeRunResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "sourceUrl": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "recordsScraped": {
+            "type": "object"
+          },
+          "recordsCreated": {
+            "type": "object"
+          },
+          "recordsUpdated": {
+            "type": "object"
+          },
+          "errorMessage": {
+            "type": "object"
+          },
+          "startedAt": {
+            "type": "string"
+          },
+          "completedAt": {
+            "type": "object"
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "resourceType",
+          "sourceUrl",
+          "status",
+          "startedAt",
+          "createdAt"
+        ]
+      },
+      "ChangeHistoryResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "scrapeRunId": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "resourceId": {
+            "type": "string"
+          },
+          "resourceSlug": {
+            "type": "string"
+          },
+          "changeType": {
+            "type": "string"
+          },
+          "previousData": {
+            "type": "object"
+          },
+          "newData": {
+            "type": "object"
+          },
+          "changedFields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "scrapeRunId",
+          "resourceType",
+          "resourceId",
+          "resourceSlug",
+          "changeType",
+          "createdAt"
+        ]
+      }
+    }
+  }
+}
